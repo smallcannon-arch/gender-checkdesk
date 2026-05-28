@@ -1,0 +1,2428 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>校園性平流程法規對照臺</title>
+  <style>
+    :root {
+      --navy-900: #16243a;
+      --navy-800: #20324e;
+      --navy-700: #2f4568;
+      --ink: #1d2733;
+      --muted: #657386;
+      --line: #d8ded9;
+      --cream: #f5f1e8;
+      --paper: #fffcf5;
+      --sage: #8fa69a;
+      --gold: #b4975b;
+      --rust: #a15d4f;
+      --alert: #8f3f37;
+      --white: #ffffff;
+      --shadow: 0 18px 42px rgba(22, 36, 58, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(22, 36, 58, 0.08), rgba(245, 241, 232, 0) 220px),
+        var(--cream);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--navy-900);
+      color: var(--white);
+      border-bottom: 5px solid var(--gold);
+    }
+
+    .hero {
+      width: min(1560px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .kicker {
+      margin: 0;
+      color: #d9caa1;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .tool-pill {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 11px;
+      color: #f5dfaa;
+      background: rgba(255, 252, 245, 0.08);
+      border: 1px solid rgba(245, 223, 170, 0.34);
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.75rem);
+      line-height: 1.18;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 8px 0 0;
+      color: #dfe8e3;
+      font-size: clamp(0.96rem, 1.35vw, 1.08rem);
+      line-height: 1.5;
+    }
+
+    .tool-notice {
+      max-width: 920px;
+      margin: 10px 0 0;
+      padding: 9px 12px;
+      color: #f4efe3;
+      background: rgba(255, 252, 245, 0.09);
+      border: 1px solid rgba(245, 223, 170, 0.28);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius);
+      font-size: 0.96rem;
+    }
+
+    .workspace {
+      width: min(1560px, calc(100% - 32px));
+      margin: 20px auto 30px;
+      display: grid;
+      grid-template-columns: minmax(340px, 380px) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .flow-panel,
+    .detail-panel {
+      background: rgba(255, 252, 245, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .flow-panel {
+      padding: 16px;
+      position: sticky;
+      top: 16px;
+      scroll-margin-top: 20px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: var(--navy-900);
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .step-total {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .flow-help {
+      display: none;
+      margin: -6px 0 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .flow-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .flow-list > li {
+      position: relative;
+    }
+
+    .flow-list > li::after {
+      display: none;
+    }
+
+    .flow-group {
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .flow-group.is-active {
+      border-color: rgba(180, 151, 91, 0.72);
+      box-shadow: inset 4px 0 0 var(--gold);
+    }
+
+    .flow-group-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 11px;
+      color: var(--navy-900);
+      background: #f3efe5;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .flow-group.is-active .flow-group-title {
+      background: #efe3c4;
+    }
+
+    .flow-group-count {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .flow-group-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 10px;
+      list-style: none;
+    }
+
+    .flow-group-list li {
+      position: relative;
+    }
+
+    .flow-group-list li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 26px;
+      bottom: -9px;
+      z-index: 1;
+      width: 1px;
+      height: 9px;
+      background: var(--line);
+    }
+
+    .flow-node {
+      width: 100%;
+      min-height: 82px;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 11px 12px;
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--sage);
+      border-radius: var(--radius);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .flow-node:hover,
+    .flow-node:focus-visible {
+      border-color: var(--navy-700);
+      box-shadow: 0 10px 26px rgba(22, 36, 58, 0.12);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .flow-node.is-active {
+      color: var(--white);
+      background: var(--navy-800);
+      border-color: var(--navy-800);
+      border-left-color: var(--gold);
+    }
+
+    .node-code {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: var(--navy-900);
+      background: #edf1ed;
+      border: 1px solid rgba(47, 69, 104, 0.18);
+      border-radius: 50%;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .flow-node.is-active .node-code {
+      color: var(--navy-900);
+      background: #f3dca0;
+      border-color: transparent;
+    }
+
+    .node-text {
+      min-width: 0;
+    }
+
+    .node-title {
+      display: block;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .node-meta {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .flow-node.is-active .node-meta {
+      color: #dfe8e3;
+    }
+
+    .node-deadline {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      margin-top: 8px;
+      padding: 2px 8px;
+      color: var(--navy-900);
+      background: #efe3c4;
+      border: 1px solid rgba(180, 151, 91, 0.4);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .flow-node.is-active .node-deadline {
+      color: var(--navy-900);
+      background: #f3dca0;
+      border-color: transparent;
+    }
+
+    .detail-panel {
+      overflow: hidden;
+      scroll-margin-top: 20px;
+      background: rgba(255, 252, 245, 0.98);
+    }
+
+    .detail-header {
+      padding: 24px 26px;
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(143, 166, 154, 0.22), rgba(180, 151, 91, 0.12)),
+        var(--navy-800);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .back-to-flow {
+      display: none;
+      width: fit-content;
+      margin: 14px 18px 0;
+      padding: 8px 12px;
+      color: var(--navy-800);
+      background: #f1eadb;
+      border: 1px solid rgba(180, 151, 91, 0.34);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .back-to-flow:focus-visible {
+      outline: 3px solid rgba(180, 151, 91, 0.35);
+      outline-offset: 2px;
+    }
+
+    .selected-code {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 3px 10px;
+      color: #f5dfaa;
+      border: 1px solid rgba(245, 223, 170, 0.42);
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.86rem;
+    }
+
+    .detail-title {
+      margin: 12px 0 0;
+      font-size: clamp(1.35rem, 2.1vw, 2rem);
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--line);
+      margin-bottom: 0;
+    }
+
+    .check-section {
+      padding: 20px 22px;
+      background: var(--paper);
+    }
+
+    .check-section.full {
+      grid-column: 1 / -1;
+    }
+
+    .check-section.risk {
+      background: #fcf8ef;
+      border-top: 3px solid rgba(180, 151, 91, 0.48);
+    }
+
+    .check-section.alert {
+      background: #fbf2ef;
+      border: 1px solid rgba(143, 63, 55, 0.24);
+      border-top: 4px solid rgba(143, 63, 55, 0.62);
+    }
+
+    .check-section.alert .section-label {
+      color: #743c35;
+    }
+
+    .critical-risk-box {
+      margin: 0 0 16px;
+      padding: 14px 15px;
+      background: #f7e9e4;
+      border: 1px solid rgba(143, 63, 55, 0.22);
+      border-left: 5px solid rgba(143, 63, 55, 0.66);
+      border-radius: var(--radius);
+    }
+
+    .critical-risk-title {
+      margin: 0 0 8px;
+      color: #6e3832;
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+
+    .critical-risk-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .critical-risk-list li {
+      position: relative;
+      padding-left: 18px;
+      color: #3b2d2b;
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .critical-risk-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 7px;
+      height: 7px;
+      background: rgba(143, 63, 55, 0.72);
+      border-radius: 50%;
+    }
+
+    .summary-section {
+      padding: 22px 24px;
+      background: #f9f3e5;
+      border-left: 7px solid var(--gold);
+    }
+
+    .summary-text {
+      margin: 0;
+      color: var(--navy-900);
+      font-size: clamp(1.08rem, 2vw, 1.32rem);
+      font-weight: 900;
+      line-height: 1.55;
+    }
+
+    .priority-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(250px, 0.75fr);
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .action-steps {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .action-steps li {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(216, 222, 217, 0.86);
+      border-radius: var(--radius);
+    }
+
+    .step-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      min-height: 26px;
+      margin-top: 1px;
+      color: var(--navy-900);
+      background: #e9eee9;
+      border: 1px solid rgba(143, 166, 154, 0.55);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .selected-deadline {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      margin-left: 8px;
+      padding: 3px 10px;
+      color: var(--navy-900);
+      background: #f3dca0;
+      border: 1px solid rgba(245, 223, 170, 0.36);
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .alert-subtitle {
+      margin: -3px 0 12px;
+      color: #6f504b;
+      font-size: 0.92rem;
+    }
+
+    .detail-check {
+      background: var(--paper);
+    }
+
+    .detail-check > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 62px;
+      padding: 18px 22px;
+      color: var(--navy-900);
+      background: #f4efe3;
+      border-top: 1px solid var(--line);
+      cursor: pointer;
+      font-weight: 900;
+      list-style: none;
+    }
+
+    .detail-check > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .detail-check > summary::after {
+      content: "+";
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--navy-900);
+      background: #e8dcc1;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .detail-check[open] > summary::after {
+      content: "-";
+    }
+
+    .detail-subsections {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      background: #f0eadf;
+    }
+
+    .detail-subsection {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .detail-subsection > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 52px;
+      padding: 13px 15px;
+      color: var(--navy-800);
+      background: #fbf7ee;
+      cursor: pointer;
+      font-weight: 900;
+      list-style: none;
+    }
+
+    .detail-subsection > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .detail-subsection > summary::after {
+      content: "+";
+      width: 24px;
+      height: 24px;
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      color: var(--navy-900);
+      background: #e8dcc1;
+      border-radius: 999px;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .detail-subsection[open] > summary::after {
+      content: "-";
+    }
+
+    .detail-subsection-body {
+      padding: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .detail-subsection.risk > summary {
+      background: #fbf1e6;
+    }
+
+    .law-label-note {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .legal-ref-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .legal-ref-card {
+      padding: 13px 14px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(216, 222, 217, 0.9);
+      border-left: 5px solid var(--sage);
+      border-radius: var(--radius);
+    }
+
+    .legal-ref-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .legal-ref-law {
+      color: var(--navy-900);
+      font-weight: 900;
+    }
+
+    .legal-ref-article {
+      padding: 2px 8px;
+      color: var(--navy-900);
+      background: #efe3c4;
+      border: 1px solid rgba(180, 151, 91, 0.38);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .legal-ref-label {
+      margin: 0 0 8px;
+      color: var(--navy-800);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .legal-ref-plain {
+      margin: 0;
+      padding-top: 8px;
+      color: #687485;
+      border-top: 1px solid rgba(216, 222, 217, 0.78);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .legal-ref-plain::before {
+      content: "白話提示";
+      display: inline-block;
+      margin-right: 7px;
+      color: #7a6a45;
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .document-ref-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .document-ref-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .document-ref-card {
+      padding: 13px 14px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(216, 222, 217, 0.9);
+      border-left: 5px solid var(--gold);
+      border-radius: var(--radius);
+    }
+
+    .document-ref-title {
+      margin: 0 0 6px;
+      color: var(--navy-900);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .document-ref-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .document-ref-head .document-ref-title {
+      margin: 0;
+    }
+
+    .document-ref-type {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .document-ref-type.is-official {
+      color: var(--navy-900);
+      background: #efe3c4;
+      border: 1px solid rgba(180, 151, 91, 0.38);
+    }
+
+    .document-ref-type.is-local {
+      color: var(--navy-800);
+      background: #e9eee9;
+      border: 1px solid rgba(143, 166, 154, 0.48);
+    }
+
+    .document-ref-type.is-reference {
+      color: #5f4b22;
+      background: #f1e8d0;
+      border: 1px solid rgba(180, 151, 91, 0.34);
+    }
+
+    .document-ref-purpose,
+    .document-ref-source {
+      margin: 0;
+      color: #536174;
+      font-size: 0.9rem;
+    }
+
+    .document-ref-source {
+      margin-top: 5px;
+    }
+
+    .document-ref-reference-note {
+      margin: 6px 0 0;
+      color: #74664a;
+      font-size: 0.86rem;
+    }
+
+    .document-ref-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      margin-top: 11px;
+      padding: 6px 12px;
+      color: var(--white);
+      background: var(--navy-700);
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .document-ref-link:hover,
+    .document-ref-link:focus-visible {
+      background: var(--navy-900);
+      outline: 2px solid rgba(180, 151, 91, 0.5);
+      outline-offset: 2px;
+    }
+
+    .document-ref-static {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      margin-top: 11px;
+      padding: 6px 12px;
+      color: var(--navy-800);
+      background: #e9eee9;
+      border: 1px solid rgba(143, 166, 154, 0.48);
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      font-weight: 900;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 10px;
+      color: var(--navy-800);
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+
+    .label-mark {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sage);
+    }
+
+    .alert .label-mark {
+      background: var(--alert);
+    }
+
+    .section-content {
+      margin: 0;
+      color: #273342;
+    }
+
+    .section-content ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .section-content li + li {
+      margin-top: 6px;
+    }
+
+    .deadline {
+      display: flex;
+      align-items: center;
+      width: min(100%, 560px);
+      max-width: 100%;
+      min-height: 56px;
+      padding: 12px 15px;
+      color: var(--navy-900);
+      background: #ead7a9;
+      border: 1px solid rgba(180, 151, 91, 0.58);
+      border-left: 6px solid var(--gold);
+      border-radius: var(--radius);
+      font-weight: 900;
+      box-shadow: inset 0 0 0 1px rgba(255, 252, 245, 0.55);
+    }
+
+    .source-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-note {
+      width: auto;
+      margin: 28px 22px 24px;
+      padding: 16px 18px;
+      color: var(--muted);
+      background: #f2eee4;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .footer-note p {
+      margin: 0 0 6px;
+    }
+
+    .footer-note p:last-child {
+      margin-bottom: 0;
+    }
+
+    .footer-note a {
+      color: var(--navy-700);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .version-info {
+      margin-top: 10px;
+      padding-top: 10px;
+      color: #6d7684;
+      border-top: 1px solid rgba(216, 222, 217, 0.78);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    @media print {
+      @page {
+        margin: 14mm;
+      }
+
+      * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      html,
+      body,
+      .app-shell,
+      .workspace,
+      .detail-panel {
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+      }
+
+      body {
+        color: #172235 !important;
+      }
+
+      .topbar,
+      .flow-panel,
+      .back-to-flow,
+      .footer-note {
+        display: none !important;
+      }
+
+      .workspace {
+        display: block !important;
+        margin: 0 !important;
+      }
+
+      .detail-panel {
+        display: block !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+      }
+
+      .detail-header {
+        padding: 0 0 12px !important;
+        color: #172235 !important;
+        background: #ffffff !important;
+        border-bottom: 2px solid #172235 !important;
+      }
+
+      .selected-code,
+      .selected-deadline,
+      .deadline,
+      .step-index,
+      .legal-ref-article,
+      .document-ref-type {
+        color: #172235 !important;
+        background: #ffffff !important;
+        border-color: #9099a6 !important;
+      }
+
+      .detail-title {
+        color: #172235 !important;
+        font-size: 20pt !important;
+      }
+
+      .detail-grid,
+      .priority-grid,
+      .detail-subsections {
+        display: block !important;
+        background: #ffffff !important;
+      }
+
+      .check-section,
+      .summary-section,
+      .check-section.alert,
+      .detail-check,
+      .detail-subsection,
+      .legal-ref-card,
+      .document-ref-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        background: #ffffff !important;
+        border-color: #c5ccd5 !important;
+      }
+
+      .summary-section,
+      .check-section {
+        padding: 12px 0 !important;
+        border-left: 0 !important;
+      }
+
+      .check-section.alert {
+        border: 1px solid #c5ccd5 !important;
+        padding: 12px !important;
+      }
+
+      .detail-check > summary,
+      .detail-subsection > summary {
+        padding: 12px 0 !important;
+        color: #172235 !important;
+        background: #ffffff !important;
+        border-top: 1px solid #c5ccd5 !important;
+      }
+
+      .detail-check > summary::after,
+      .detail-subsection > summary::after {
+        display: none !important;
+      }
+
+      details:not([open]) > :not(summary) {
+        display: block !important;
+      }
+
+      .detail-subsection.field-documents,
+      .detail-subsection.field-risk_warnings,
+      .detail-subsection.field-source_note {
+        display: none !important;
+      }
+
+      .detail-subsection-body {
+        padding: 10px 0 14px !important;
+        border-top: 0 !important;
+      }
+
+      .legal-ref-card,
+      .document-ref-card {
+        margin-bottom: 8px !important;
+        padding: 10px !important;
+        border-left: 3px solid #9099a6 !important;
+      }
+
+      .document-ref-link,
+      .document-ref-static {
+        display: none !important;
+      }
+    }
+
+    @media (min-width: 901px) {
+      body {
+        overflow: hidden;
+      }
+
+      .app-shell {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .topbar {
+        flex: 0 0 auto;
+      }
+
+      .workspace {
+        flex: 1 1 auto;
+        min-height: 0;
+        margin: 18px auto 18px;
+        align-items: stretch;
+        overflow: hidden;
+      }
+
+      .flow-panel,
+      .detail-panel {
+        min-height: 0;
+        max-height: 100%;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(47, 69, 104, 0.34) rgba(255, 252, 245, 0.45);
+      }
+
+      .flow-panel {
+        position: relative;
+        top: auto;
+      }
+
+      .flow-panel::-webkit-scrollbar,
+      .detail-panel::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .flow-panel::-webkit-scrollbar-track,
+      .detail-panel::-webkit-scrollbar-track {
+        background: rgba(255, 252, 245, 0.55);
+      }
+
+      .flow-panel::-webkit-scrollbar-thumb,
+      .detail-panel::-webkit-scrollbar-thumb {
+        background: rgba(47, 69, 104, 0.28);
+        border-radius: 999px;
+      }
+
+      .detail-panel {
+        padding-bottom: 2px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-panel {
+        position: static;
+      }
+
+      .flow-help {
+        display: block;
+      }
+
+      .back-to-flow {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .flow-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .flow-list > li::after {
+        display: none;
+      }
+
+      .flow-node {
+        min-height: 90px;
+        align-content: start;
+        padding: 13px;
+      }
+
+      .node-code {
+        width: auto;
+        height: auto;
+        justify-self: start;
+        padding: 3px 9px;
+        border-radius: 999px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        width: min(100% - 24px, 1560px);
+        padding: 18px 0 16px;
+      }
+
+      .workspace {
+        width: min(100% - 24px, 1560px);
+      }
+
+      .workspace {
+        margin-top: 18px;
+      }
+
+      .hero-top {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .flow-list,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .priority-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-list > li::after {
+        display: none;
+      }
+
+      .flow-group-title {
+        min-height: 44px;
+        padding: 11px 12px;
+      }
+
+      .flow-node {
+        min-height: 88px;
+      }
+
+      .detail-header {
+        padding: 21px 18px;
+      }
+
+      .footer-note {
+        margin: 22px 14px 18px;
+        padding: 14px;
+      }
+
+      .check-section {
+        min-height: auto;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="hero">
+        <div class="hero-top">
+          <p class="kicker">GENDER EQUITY PROCEDURE CHECKDESK</p>
+          <span class="tool-pill">靜態查核工具 · 不儲存個案資料</span>
+        </div>
+        <h1>校園性平流程法規對照臺</h1>
+        <p class="subtitle">依教育部處理流程圖延伸，協助承辦人查核流程、法規、文件與程序風險</p>
+        <p class="tool-notice">本工具為流程與法規查核輔助，實際案件仍應依現行法規、主管機關函釋及性平會決議辦理。</p>
+      </div>
+    </header>
+
+    <main class="workspace" aria-label="流程查核工具">
+      <aside class="flow-panel" aria-label="流程步驟">
+        <div class="panel-title">
+          <span>流程目錄</span>
+          <span class="step-total">共 15 個步驟</span>
+        </div>
+        <p class="flow-help">點選任一步驟查看查核卡</p>
+        <ol class="flow-list" id="flowList"></ol>
+      </aside>
+
+      <section class="detail-panel" id="check-card" aria-live="polite">
+        <div class="detail-header">
+          <span class="selected-code" id="selectedCode"></span>
+          <span class="selected-deadline" id="selectedDeadline"></span>
+          <h2 class="detail-title" id="detailTitle"></h2>
+        </div>
+
+        <button class="back-to-flow" type="button" id="backToFlow">↑ 回到流程目錄</button>
+        <div class="detail-grid" id="detailGrid"></div>
+        <footer class="footer-note">
+          <p>本工具為校園性別事件流程與法規查核輔助，實際案件仍應依現行法規、主管機關函釋及學校性別平等教育委員會決議辦理。</p>
+          <p>COPYRIGHT © 2026 HSINCHU NEI HU PRIMARY SCHOOL</p>
+          <p>總務主任 江志宏</p>
+          <p><a href="mailto:smallcannon@nhps.hc.edu.tw">smallcannon@nhps.hc.edu.tw</a>｜03-5373184 #130</p>
+          <p class="version-info">版本：v0.4.x｜資料基準：教育部流程圖 202501 修｜最後維護：2026-05</p>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const FLOW_NODES = [
+      {
+        node_id: "N001",
+        node_order: 1,
+        node_title: "獲知疑似事件／收件",
+        purpose: "學校教職員工獲知疑似校園性別事件，或學校接獲申請調查、檢舉時，應啟動校內處理機制。",
+        actions: [
+          "確認事件來源：教職員工獲知、申請調查或檢舉。",
+          "緊急時先以口頭或電話聯繫學校通報權責人員。",
+          "填寫校安事件告知單或校內指定紀錄。",
+          "指派專人處理相關行政事宜。",
+          "通知諮商輔導單位，視當事人需要提供協助。"
+        ],
+        deadline: "獲知後應立即啟動校內通報與處理流程。",
+        legal_basis: "性別平等教育法、校園性別事件防治準則有關學校處理校園性別事件、提供協助及資訊之規定。",
+        documents: "校安事件告知單、申請調查或檢舉紀錄、校內收件紀錄。",
+        risk_warnings: [
+          "不要先自行查清楚才通報。",
+          "不要只做口頭紀錄而未留下書面或系統紀錄。",
+          "不要讓導師或非承辦人自行私下處理。",
+          "視當事人需要，啟動關懷小組或通知諮商輔導單位提供支持。",
+          "提醒相關人員嚴守保密義務，不得於社群媒體、班級群組或非必要場合揭露當事人身分或事件細節。"
+        ],
+        red_flags: [
+          "涉及未成年學生。",
+          "涉及疑似性侵害。",
+          "行為人為教師、職員工或校長。",
+          "家長或學生要求學校不要處理。",
+          "若案件可能引發媒體、社群或家長群組關注，應指定單一發言窗口，避免多頭回應。"
+        ],
+        source_note: "依教育部流程圖「學校教職員工獲知疑似事件」「申請調查或檢舉」及秘書單位任務延伸。"
+      },
+      {
+        node_id: "N002",
+        node_order: 2,
+        node_title: "24 小時通報",
+        purpose: "學校知悉疑似校園性別事件後，應依規定進行校安通報及必要之法定通報。",
+        actions: [
+          "進行校安通報。",
+          "視事件性質確認是否需社政通報。",
+          "已滿 18 歲之人非兒童少年之疑似性騷擾事件，需另檢核是否須社政通報。",
+          "行為人為教師身分者，除完成24小時通報外，另應檢核教師法暫時停聘相關程序與期限。",
+          "鼓勵被害人、法定代理人或實際照顧者申請調查，或由學校提出檢舉。",
+          "視當事人需要，啟動關懷小組或通知諮商輔導單位提供支持。"
+        ],
+        deadline: "24 小時內。",
+        legal_basis: "性別平等教育法及相關通報規定；兒少保護、性侵害防治及校安通報相關規定。",
+        documents: "校安通報紀錄、社政通報紀錄、校內通報紀錄。",
+        risk_warnings: [
+          "通報不是定罪，不應因事實尚未釐清而延後。",
+          "不要只通知校內主管而未完成正式通報。",
+          "不要漏掉兒少保護或性侵害防治相關通報。",
+          "若案件可能引發媒體、社群或家長群組關注，應指定單一發言窗口，避免多頭回應。",
+          "提醒相關人員嚴守保密義務，不得於社群媒體、班級群組或非必要場合揭露當事人身分或事件細節。"
+        ],
+        red_flags: [
+          "未成年被害人。",
+          "疑似性侵害。",
+          "涉及教師身分行為人。",
+          "家長要求不要通報。"
+        ],
+        source_note: "依教育部流程圖左側「時限 24 小時」及通報欄位延伸。"
+      },
+      {
+        node_id: "N003",
+        node_order: 3,
+        node_title: "管轄判斷／7 個工作日內移送",
+        purpose: "確認本校是否為事件管轄學校；若無管轄權，應移送有管轄權之學校或主管機關，並通知當事人。",
+        actions: [
+          "確認行為人身分。",
+          "確認行為發生時行為人所屬學校或機關。",
+          "判斷本校是否有管轄權。",
+          "若行為人為校長，移送主管機關。",
+          "若為跨校事件且本校非管轄學校，移送有管轄權學校。",
+          "通知當事人移送情形。"
+        ],
+        deadline: "無管轄權時，7 個工作日內移送。",
+        legal_basis: "校園性別事件防治準則關於事件管轄學校、行為人為校長及無管轄權移送之規定。",
+        documents: "移送函、通知當事人函、管轄判斷紀錄。",
+        risk_warnings: [
+          "不要只因被害人是本校學生就直接認定本校有完整管轄權。",
+          "行為人是校長時，不應由學校進入一般受理調查流程。",
+          "移送時不要漏通知當事人。",
+          "跨校、實習場域、兼任多職或行為人身分異動時，管轄判斷可能較複雜，必要時應洽主管機關確認。"
+        ],
+        red_flags: [
+          "行為人為校長。",
+          "行為人為他校學生或教職員。",
+          "事件跨校或跨縣市。",
+          "行為人身分不明。"
+        ],
+        source_note: "依教育部流程圖「學校無管轄權（7日內）如校長為行為人、跨校事件非管轄學校等」延伸。"
+      },
+      {
+        node_id: "N004",
+        node_order: 4,
+        node_title: "3 日內交性平會",
+        purpose: "接獲申請調查或檢舉後，學校應於期限內將事件交由性別平等教育委員會處理。",
+        actions: [
+          "彙整申請調查或檢舉資料。",
+          "將案件資料送交性平會。",
+          "陳報性平會主任委員，聯繫召開性平會。",
+          "秘書單位協助安排會議、資料及後續通知。"
+        ],
+        deadline: "接獲申請調查或檢舉後 3 日內。",
+        legal_basis: "性別平等教育法及校園性別事件防治準則關於學校交由性平會處理之規定。",
+        documents: "交性平會簽呈、性平會開會通知、申請調查或檢舉資料彙整。",
+        risk_warnings: [
+          "不要由承辦人、導師或校長自行決定案件是否處理。",
+          "不要把案件卡在行政端未交性平會。",
+          "不要以資料不完整為由延後交性平會。"
+        ],
+        red_flags: [
+          "已有正式申請或檢舉。",
+          "當事人或家長意見分歧。",
+          "校內主管想先行協調或私下處理。"
+        ],
+        source_note: "依教育部流程圖「接獲申請調查或檢舉，3日」及性平會受理流程延伸。"
+      },
+      {
+        node_id: "N005",
+        node_order: 5,
+        node_title: "20 日內受理／不受理",
+        purpose: "性平會應依法審查是否受理，並於期限內以書面通知申請人、被害人或檢舉人。",
+        actions: [
+          "性平會審查是否有不受理情形。",
+          "無不受理情形者，議決受理。",
+          "有不受理情形者，議決不受理。",
+          "20 日內以書面通知申請人、被害人或檢舉人是否受理。",
+          "不受理時應敘明理由並告知申復權利。"
+        ],
+        deadline: "20 日內以書面通知是否受理。",
+        legal_basis: "性別平等教育法第 32 條及校園性別事件防治準則受理、不受理與申復相關規定。",
+        documents: "性平會會議紀錄、受理通知函、不受理通知函、申復權利告知。",
+        risk_warnings: [
+          "不要由承辦人或校長口頭決定不受理。",
+          "不要漏寫不受理理由。",
+          "不要漏載申復期限。",
+          "不受理申復應注意接獲不受理通知次日起 20 日內提出。",
+          "家長表示不願調查時，仍須檢核是否涉及公益必要。"
+        ],
+        red_flags: [
+          "家長要求不要調查。",
+          "學生改口說沒事。",
+          "涉及多名被害人或校園安全疑慮。",
+          "行為人為教職員工。"
+        ],
+        source_note: "依教育部流程圖「性別平等教育委員會依據性平法第32條」及「20日內以書面通知」延伸。"
+      },
+      {
+        node_id: "N006",
+        node_order: 6,
+        node_title: "組調查小組",
+        purpose: "受理後，性平會應依規定組成調查小組，進行訪談、調查及撰寫調查報告。",
+        actions: [
+          "性平會議決調查小組人選，或授權主任委員與專人協調聯繫。",
+          "調查小組人數為三人或五人。",
+          "確認委員專業資格、性別比例、外聘要求及利益迴避。",
+          "行為人為校長、教師、職員或工友時，特別檢核外聘要求。",
+          "調查小組進行訪談並撰寫調查報告。"
+        ],
+        deadline: "受理後依調查期限辦理，通常應注意受理後二個月調查期限及展延規定。",
+        legal_basis: "性別平等教育法及校園性別事件防治準則關於調查小組組成、調查程序、利益迴避及保密義務之規定。",
+        documents: "調查小組聘任文件、保密義務告知／保密切結、利益迴避聲明、訪談通知、調查報告。",
+        risk_warnings: [
+          "不要用校內人員湊足調查小組而忽略外聘要求。",
+          "不要忘記利益迴避。",
+          "不要讓輔導人員兼任調查工作。",
+          "不要讓雙方對質。"
+        ],
+        red_flags: [
+          "行為人為教職員工。",
+          "委員與當事人有師生、親屬、輔導或行政利害關係。",
+          "案情高度敏感或涉及權力不對等。",
+          "當事人已有創傷反應或家長強烈介入。"
+        ],
+        source_note: "依教育部流程圖「組調查小組：三或五人、訪談、撰寫調查報告」及調查程序相關法規延伸。"
+      }
+    ];
+
+    const flowList = document.querySelector("#flowList");
+    const flowPanel = document.querySelector(".flow-panel");
+    const detailPanel = document.querySelector("#check-card");
+    const backToFlow = document.querySelector("#backToFlow");
+    const selectedCode = document.querySelector("#selectedCode");
+    const selectedDeadline = document.querySelector("#selectedDeadline");
+    const detailTitle = document.querySelector("#detailTitle");
+    const detailGrid = document.querySelector("#detailGrid");
+
+    const SUMMARY_MAP = {
+      N001: "先把疑似事件正式收進校內流程，留下紀錄並啟動必要協助。",
+      N002: "先完成 24 小時內應辦通報，再接續確認調查申請或檢舉程序。",
+      N003: "先判斷本校是否有管轄權；沒有管轄權時要在期限內移送並通知。",
+      N004: "只要接獲申請或檢舉，就要在 3 日內交由性平會處理。",
+      N005: "性平會要在 20 日內作成受理或不受理決定，並以書面通知。",
+      N006: "案件受理後，重點是依法組成適格調查小組並控管調查程序。"
+    };
+
+    const LEGAL_REFS = {
+      N001: [
+        { law: "性別平等教育法", article: "第31條", label: "申請調查與檢舉", plain: "被害人、法定代理人或實際照顧者得向行為人所屬學校申請調查；任何人知悉事件得檢舉。" },
+        { law: "校園性別事件防治準則", article: "第18條", label: "申請／檢舉方式與書面紀錄", plain: "申請或檢舉得以書面、言詞或電子郵件提出；言詞或電子郵件應作成紀錄並確認簽名。" },
+        { law: "校園性別事件防治準則", article: "第19條", label: "收件單位", plain: "高級中等以下學校收件單位為學務處或教導處。" }
+      ],
+      N002: [
+        { law: "性別平等教育法", article: "第22條", label: "24小時通報義務", plain: "知悉疑似校園性別事件後，至遲不得超過24小時完成主管機關及必要之社政通報。" },
+        { law: "性別平等教育法", article: "第43條", label: "未依限通報裁罰", plain: "未依規定通報可能涉及行政裁罰，宜放在程序風險提醒。" }
+      ],
+      N003: [
+        { law: "校園性別事件防治準則", article: "第11條", label: "事件管轄學校／機關", plain: "原則上向行為人於行為發生時所屬學校申請調查或檢舉；行為人為校長者，向主管機關提出。" },
+        { law: "校園性別事件防治準則", article: "第16條", label: "無管轄權移送", plain: "無管轄權者，應於7 個工作日內移送有管轄權者，並通知當事人。" }
+      ],
+      N004: [
+        { law: "性別平等教育法", article: "第33條", label: "3日內交性平會", plain: "除有法定不受理事由外，接獲申請或檢舉後應於3日內交由性平會調查處理。" },
+        { law: "校園性別事件防治準則", article: "第19條第2項", label: "收件後交付性平會", plain: "收件單位收件後，除有法定不受理事由外，應於3日內將事證資料交付性平會。" }
+      ],
+      N005: [
+        { law: "性別平等教育法", article: "第32條", label: "20日內受理通知與不受理事由", plain: "接獲申請或檢舉後，應於20日內書面通知是否受理；不受理限於法定事由，並應敘明理由。" },
+        { law: "校園性別事件防治準則", article: "第21條", label: "不受理通知與申復", plain: "不受理通知應告知申復期限及受理單位；未收到通知或接獲不受理通知次日起20日內得申復。" }
+      ],
+      N006: [
+        { law: "性別平等教育法", article: "第33條", label: "調查小組組成與全部外聘", plain: "行為人為校長、教師、職員或工友者，應成立調查小組且成員全部外聘；並應符合女性比例與專家學者比例。" },
+        { law: "校園性別事件防治準則", article: "第22條", label: "調查小組人數、資格限制與迴避", plain: "調查小組以3人或5人為原則，並規範不得擔任成員與迴避事項。" },
+        { law: "校園性別事件防治準則", article: "第23條", label: "調查專業人員資格", plain: "規範具校園性別事件調查專業素養之專家學者資格。" },
+        { law: "校園性別事件防治準則", article: "第24條", label: "調查程序注意事項", plain: "包含特教專業、避免對質、保密、通知配合調查及不得私下調查等程序要求。" }
+      ]
+    };
+
+    const DOCUMENT_SOURCE_URL = "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40";
+    const DOCUMENT_SOURCE_NAME = "友善校園學生事務與輔導工作資訊網";
+    const TAIPEI_REFERENCE_FORM_URL = "https://www.gender.tp.edu.tw/cht/index.php?code=list&ids=36";
+
+    const DOCUMENT_REFS = {
+      N001: [
+        { title: "1-0-0 各類校安事件告知單（參考格式）", purpose: "獲知疑似事件後，作為校內初始告知與紀錄使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "1-0-1 申請表", purpose: "當事人申請調查或學校接獲檢舉時，作為收件與程序啟動資料。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "臺北市參考｜A-1 校安事件告知單", purpose: "地方參考格式，供校內初始告知與紀錄作業參考。", source: "臺北市參考", source_type: "地方參考表單" },
+        { title: "臺北市參考｜A-2 申請表", purpose: "地方參考格式，供申請調查或檢舉收件作業參考。", source: "臺北市參考", source_type: "地方參考表單" },
+        { title: "臺北市參考｜A-8 關懷小組相關表件", purpose: "地方參考格式，供啟動關懷小組或支持協助作業參考。", source: "臺北市參考", source_type: "地方參考表單" }
+      ],
+      N002: [
+        { title: "1-0-0 各類校安事件告知單（參考格式）", purpose: "進行校安通報前後，協助整理事件基本資訊與校內紀錄。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "家庭暴力與兒童少年保護事件通報表", purpose: "事件涉及家庭暴力或兒童少年保護通報時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL }
+      ],
+      N003: [
+        { title: "移送函", purpose: "本校無管轄權或行為人為校長時，依公文程序移送有管轄權學校或主管機關。", source: "校內自備", source_type: "校內自備", url: "" },
+        { title: "通知當事人函", purpose: "告知當事人案件已移送及移送對象。", source: "校內自備", source_type: "校內自備", url: "" },
+        { title: "臺北市參考｜A-6 跨校移送函", purpose: "地方參考格式，供跨校或無管轄權移送作業參考。", source: "臺北市參考", source_type: "地方參考表單" },
+        { title: "臺北市參考｜A-7 派代表參與通知函", purpose: "地方參考格式，供跨校案件派代表參與或協調作業參考。", source: "臺北市參考", source_type: "地方參考表單" }
+      ],
+      N004: [
+        { title: "1-0-1 申請表", purpose: "接獲申請調查時，作為收件與程序啟動資料。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "1-3 校園性別事件撤回調查申請書", purpose: "申請人撤回調查申請時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "性平會開會通知", purpose: "聯繫召開性平會並通知委員出席時使用。", source: "校內自備", source_type: "校內自備", url: "" },
+        { title: "交性平會簽呈", purpose: "接獲申請調查或檢舉後，將案件送交性平會處理使用。", source: "校內自備", source_type: "校內自備", url: "" }
+      ],
+      N005: [
+        { title: "1-2-1 性別事件受理通知單", purpose: "性平會議決受理後，以書面通知申請人、被害人或檢舉人使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "1-2-2 性別事件不受理通知單", purpose: "性平會議決不受理時，敘明理由並通知相關人員使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "5-1 不受理申復書", purpose: "不受理或未收到通知時，供申復程序使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "臺北市參考｜A-3 受理會議紀錄", purpose: "地方參考格式，供性平會受理審查會議紀錄作業參考。", source: "臺北市參考", source_type: "地方參考表單" },
+        { title: "臺北市參考｜A-4 受理通知", purpose: "地方參考格式，供受理通知作業參考。", source: "臺北市參考", source_type: "地方參考表單" },
+        { title: "臺北市參考｜A-5 不受理通知", purpose: "地方參考格式，供不受理通知作業參考。", source: "臺北市參考", source_type: "地方參考表單" }
+      ],
+      N006: [
+        { title: "3-1 調查小組成員簽到表", purpose: "調查小組會議或訪談程序中，確認成員出席時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "行政保密協定書", purpose: "行政人員接觸案件資料前確認保密義務時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "學校人員保密協定書", purpose: "校內人員因程序需要接觸案件資料前確認保密義務時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "調查小組保密協定書", purpose: "調查小組成員接觸案件資料前確認保密義務時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL },
+        { title: "調查工作行政準備", purpose: "調查程序啟動前，整理行政準備事項與調查作業安排時使用。", source: DOCUMENT_SOURCE_NAME, source_type: "官方表件", url: DOCUMENT_SOURCE_URL }
+      ]
+    };
+
+    const detailFieldConfig = [
+      { key: "legal_basis", label: "法規依據", type: "legal" },
+      { key: "document_refs", label: "本步驟相關表件", type: "documents" },
+      { key: "documents", label: "必要文件", type: "text" },
+      { key: "risk_warnings", label: "常見踩雷", type: "list", className: "risk" },
+      { key: "source_note", label: "來源備註", type: "note" }
+    ];
+
+    const DEADLINE_TAGS = {
+      N001: "立即啟動",
+      N002: "24 小時",
+      N003: "7 個工作日內",
+      N004: "3 日內",
+      N005: "20 日內",
+      N006: "受理後"
+    };
+
+    FLOW_NODES.push(
+      {
+        node_id: "N007",
+        node_order: 7,
+        node_title: "調查訪談",
+        purpose: "調查小組受性平會委託後，應依法進行訪談、蒐集資料、確認當事人陳述與相關證據，並注意保密、避免對質、避免二度傷害及程序公正。",
+        actions: [
+          "發送訪談通知，確認受訪時間、地點及陪同人員。",
+          "分別訪談申請人、被害人、行為人及相關人員。",
+          "訪談過程應避免雙方對質，並注意當事人隱私與安全。",
+          "未成年受訪時，應檢核法定代理人或實際照顧者陪同事宜。",
+          "訪談紀錄應由受訪者閱覽確認，必要時簽名或註記意見。",
+          "調查小組應彙整人證、物證、書面資料及其他相關事證。"
+        ],
+        deadline: "自受理申請或檢舉後 2 個月內完成調查；必要時得延長，以 2 次為限，每次不得逾 1 個月，並應通知當事人。",
+        legal_basis: "性別平等教育法第33條第5項、第36條第1項；校園性別事件防治準則第24條。",
+        documents: "調查訪談通知、受訪人員簽到表、調查訪談紀錄、保密切結書／保密義務告知書、相關證據資料清單。",
+        risk_warnings: [
+          "不要讓雙方當事人對質。",
+          "不要由導師、輔導人員或承辦人私下先行調查取代調查小組程序。",
+          "不要在非必要範圍揭露當事人身分或事件細節。",
+          "不要讓訪談紀錄未經受訪者確認即作為正式紀錄。",
+          "未成年受訪時，不要漏掉法定代理人或實際照顧者陪同檢核。"
+        ],
+        red_flags: [
+          "當事人年齡低、身心狀況特殊或有創傷反應。",
+          "涉及教師、職員工、校長或權力不對等關係。",
+          "家長強烈介入或要求查看他方陳述。",
+          "受訪者陳述前後不一，或有同儕壓力、報復疑慮。"
+        ],
+        source_note: "依教育部流程圖「組調查小組：訪談、撰寫調查報告」及調查程序、保密、避免對質等規定延伸。"
+      },
+      {
+        node_id: "N008",
+        node_order: 8,
+        node_title: "調查報告",
+        purpose: "調查小組完成訪談與事證整理後，應依規定撰寫調查報告，載明調查程序、事實認定、理由及處理建議，提交性平會審議。",
+        actions: [
+          "整理受訪紀錄、書證、物證及相關資料。",
+          "釐清雙方說法一致與不一致之處。",
+          "依證據、經驗法則與論理法則進行事實認定。",
+          "撰寫調查報告，並納入法定必要內容。",
+          "確認調查報告包含案由、訪談過程紀錄、陳述及答辯、相關物證查驗、事實認定及理由、處理建議。",
+          "將調查報告提交性平會審議。"
+        ],
+        deadline: "應於自受理申請或檢舉後 2 個月內完成調查；必要時得延長，以 2 次為限，每次不得逾 1 個月，並應通知當事人。",
+        legal_basis: "性別平等教育法第36條第1項、第2項；性別平等教育法施行細則第17條。",
+        documents: "調查報告、訪談紀錄、事證清單、展延通知函。",
+        risk_warnings: [
+          "不要只整理雙方說法而未作成事實認定。",
+          "不要以單方主觀感受直接取代證據分析。",
+          "不要漏列調查程序、訪談對象、事證來源及理由。",
+          "不要漏掉調查報告法定必要內容。",
+          "即使案情單純、未另組調查小組而由性平會逕為處理，仍須依法產出符合性別平等教育法施行細則第17條規範內容之調查報告，或將法定應載明事項詳載於性平會會議紀錄中，不可免除報告產出義務。",
+          "不要逾期未展延。"
+        ],
+        red_flags: [
+          "調查期限即將屆滿。",
+          "事實認定高度依賴單一證據或單一證人。",
+          "案件涉及性侵害、權力不對等、教職員工或校長。",
+          "調查小組成員對事實認定意見分歧。"
+        ],
+        source_note: "依教育部流程圖「調查小組訪談、撰寫調查報告」及性平會審議調查報告程序延伸。"
+      },
+      {
+        node_id: "N009",
+        node_order: 9,
+        node_title: "性平會審議調查報告",
+        purpose: "性平會應審議調查報告及處理建議，確認調查程序、事實認定、理由及處置建議是否符合法規與程序要求。",
+        actions: [
+          "召開性平會審議調查報告。",
+          "檢視調查程序是否合法、事實認定是否有證據支持。",
+          "議決調查報告及處理建議。",
+          "若涉及改變行為人身分之處理建議，應注意書面陳述意見程序。",
+          "如有行為人書面陳述，性平會應再次開會審酌。",
+          "必要時將調查報告、性平會議紀錄及處理建議陳報主管機關。"
+        ],
+        deadline: "法規未明定單一審議節點期限，但後續議處與通知仍須銜接整體處理期限。",
+        legal_basis: "性別平等教育法第41條第1項；校園性別事件防治準則第30條第1項至第4項。",
+        documents: "性平會會議紀錄、簽到表、調查報告、處理建議、行為人書面陳述通知、陳報主管機關資料。",
+        risk_warnings: [
+          "性平會不宜未經程序理由直接推翻調查小組事實認定。",
+          "不要將性平會審議變成重新訪談或另設調查機制。",
+          "會議紀錄應清楚載明議決內容與處理建議。",
+          "若涉及改變身分，應注意行為人書面陳述意見程序。",
+          "有書面陳述時，性平會須再次開會審酌。"
+        ],
+        red_flags: [
+          "調查報告程序瑕疵明顯。",
+          "性平會委員對事實認定或處理建議歧見重大。",
+          "案件涉及教師停聘、解聘、不續聘或其他身分重大影響。",
+          "若涉及教師停聘、解聘、不續聘或其他身分重大影響，議決前應注意書面陳述意見程序，並由性平會再次開會審酌。",
+          "被害人安全、學習權或工作權仍有持續風險。"
+        ],
+        source_note: "依教育部流程圖「性平會議決通過調查報告及處理建議」「將處置事項陳報主管機關備查」等節點延伸。"
+      },
+      {
+        node_id: "N010",
+        node_order: 10,
+        node_title: "性平會處置",
+        purpose: "性平會處置著重於教育、輔導、保護與修復，應與權責單位之懲處程序區分。",
+        actions: [
+          "依性平會決議確認必要處置措施。",
+          "確認處置措施之性質、執行單位、執行方式與追蹤方式。",
+          "視個案需要安排心理諮商與輔導。",
+          "視個案需要安排性別平等教育相關課程。",
+          "視需要協調彈性調整課程、出缺勤、學籍或學習環境。",
+          "性平會處置涉及心理諮商、輔導或學習環境調整時，應明確指定執行單位與追蹤方式。",
+          "確認禁止報復、保護安全及追蹤列管措施。"
+        ],
+        deadline: "依性平會決議及個案需要執行，並應與後續議處、通知及追蹤程序銜接。",
+        legal_basis: "性別平等教育法第26條；校園性別事件防治準則第31條。",
+        documents: "性平會處置決議、輔導計畫、課程或環境調整紀錄、禁止報復約制紀錄、處置執行追蹤紀錄。",
+        risk_warnings: [
+          "不要把性平會處置與權責單位懲處混為一談。",
+          "不要將教育輔導處置當成懲罰替代品而漏掉權責單位議處。",
+          "涉及道歉或修復性措施時，應注意被害人意願與安全。",
+          "不得以強制手段命行為人道歉；涉及道歉或修復性措施時，應尊重當事人意願、安全與憲法保障之不表意自由。",
+          "涉及道歉、修復或其他權利限制措施時，需依個案與主管機關最新函釋確認。",
+          "處置事項應有執行單位與追蹤紀錄。"
+        ],
+        red_flags: [
+          "被害人與行為人仍有接觸風險。",
+          "處置涉及調整班級、課程、座位、出缺勤或學籍。",
+          "行為人或家長對處置措施強烈反彈。",
+          "處置涉及道歉、修復或面對面互動。"
+        ],
+        source_note: "依教育部流程圖「性平法第26條處置」「諮商輔導單位」「協助彈性調整當事人課程或教學事宜」等節點延伸。"
+      },
+      {
+        node_id: "N011",
+        node_order: 11,
+        node_title: "權責單位議處",
+        purpose: "性平會議決調查報告及處理建議後，懲處應移由行為人所屬權責單位依身分別辦理；權責單位不得脫離性平會調查認定另行重查。",
+        actions: [
+          "依行為人身分移送權責單位辦理議處。",
+          "學生案件移送學生獎懲委員會或相關權責單位。",
+          "教師案件移送教師評審委員會、考績委員會或相關權責單位。",
+          "職員工案件依其任用或勞動身分辦理。",
+          "議處前應注意被害人方陳述意見程序。",
+          "涉及教師停聘、解聘、不續聘或其他重大身分影響者，應另依教師法等外部法規確認。"
+        ],
+        deadline: "應注意接獲調查報告後 2 個月內完成議處並通知結果；涉及外部法規者，應另行確認各該法規期限。",
+        legal_basis: "校園性別事件防治準則第30條第6項；另涉及教師法、公務人員保障法、勞動相關規定、學生獎懲規定，應另依專法確認。",
+        documents: "懲處建議書、移送權責單位簽呈、被害人方陳述意見通知、學生獎懲會議紀錄、教評會或考績會資料。",
+        risk_warnings: [
+          "權責單位不應自行重新調查或推翻性平會事實認定。",
+          "不要漏掉議處前被害人方陳述意見程序。",
+          "議處前應通知被害人方限期提出陳述意見。",
+          "涉及身分重大影響時，應另依教師法等外部法規確認。",
+          "不要把性平會處置與權責單位懲處混為一談。"
+        ],
+        red_flags: [
+          "教師停聘、解聘、不續聘或管制終身。",
+          "行為人為校長、教師、職員或工友。",
+          "被害人仍與行為人同校、同班、同處室或有接觸風險。",
+          "議處程序涉及教評會、考績會、學生獎懲委員會或外部法規。"
+        ],
+        source_note: "依教育部流程圖「教師評審委員會」「考績委員會」「學生獎懲委員會」及 NotebookLM 稽核結果拆分自原 N010。"
+      },
+      {
+        node_id: "N012",
+        node_order: 12,
+        node_title: "通知處理結果",
+        purpose: "學校完成調查處理及議處程序後，應依法將處理結果以書面通知申請人、被害人或行為人，並告知申復權利。",
+        actions: [
+          "彙整調查報告、性平會議決、處置及權責單位議處結果。",
+          "製作調查處理結果通知書。",
+          "依身分別通知申請人、被害人及行為人。",
+          "通知內容應載明申復期間、受理單位及救濟途徑。",
+          "檢舉人通知應注意是否附調查報告及其申復權限制。",
+          "必要時將處理結果及處置事項陳報主管機關。"
+        ],
+        deadline: "收到處理結果書面通知次日起 30 日內得提出申復；處理結果通知應於程序完成後依法即時辦理。",
+        legal_basis: "性別平等教育法第36條第3項、第37條第1項；校園性別事件防治準則第32條。",
+        documents: "調查處理結果通知書、去識別化調查報告、申復權利告知、處置事項陳報資料。",
+        risk_warnings: [
+          "不要只口頭告知處理結果。",
+          "不要漏載申復期間及受理單位。",
+          "通知內容應注意去識別化與保密義務。",
+          "不要將完整敏感資料提供給無權知悉者。",
+          "收到處理結果書面通知次日起 30 日內提出申復。",
+          "檢舉人通知不可附調查報告，且檢舉人無申復權。",
+          "不要未待懲處程序完成就草率發出完整處理結果通知。"
+        ],
+        red_flags: [
+          "當事人對結果高度不服或已表示將申復。",
+          "通知對象包含未成年學生及其法定代理人。",
+          "調查報告內容涉及高度敏感隱私。",
+          "案件已陳報主管機關或涉及後續行政救濟。"
+        ],
+        source_note: "依教育部流程圖「通知處理結果」「不服處理結果30日內提出申復」等節點延伸。"
+      },
+      {
+        node_id: "N013",
+        node_order: 13,
+        node_title: "申復",
+        purpose: "當事人對不受理決定或調查處理結果不服時，得於法定期限內提出申復；學校應依法組成申復審議小組並完成審議。",
+        actions: [
+          "確認申復人身分、申復標的及申復期限。",
+          "區分不受理申復與處理結果申復。",
+          "不受理申復應注意接獲不受理通知次日起 20 日內提出。",
+          "處理結果申復應注意收到處理結果書面通知次日起 30 日內提出。",
+          "另簽組申復審議小組。",
+          "確認原性平會委員及原調查小組成員不得擔任申復審議小組成員。",
+          "審查申復理由；申復有理由時，依理由交性平會重啟調查或重為決定，或交權責單位重為決定。",
+          "將申復審議結果通知當事人並陳報主管機關或回報系統。"
+        ],
+        deadline: "不受理申復：接獲不受理通知次日起 20 日內提出；處理結果申復：收到處理結果書面通知次日起 30 日內提出。審議期限應依申復類型分別確認。",
+        legal_basis: "性別平等教育法第32條第3項、第37條；校園性別事件防治準則第21條、第32條。",
+        documents: "不受理申復書、調查結果不服申復書、申復審議小組簽呈、申復決定書、申復結果陳報資料。",
+        risk_warnings: [
+          "不要由原調查小組或原處理人員主導申復審議。",
+          "原性平會委員及原調查小組成員，不得擔任申復審議小組成員。",
+          "不要忽略申復期限與申復標的。",
+          "不要混淆不受理申復與處理結果申復的期限。",
+          "申復有理由時，應依理由回到正確程序重啟或重為決定。",
+          "申復結果應依法通知並陳報。"
+        ],
+        red_flags: [
+          "申復理由指出重大程序瑕疵。",
+          "調查小組組成、訪談程序、通知程序遭質疑。",
+          "涉及教師停聘、解聘或重大身分影響。",
+          "當事人已同步向主管機關、民意代表或媒體反映。"
+        ],
+        source_note: "依教育部流程圖「申復（為申訴之先行程序）」「不服處理結果30日內提出申復」「不受理20日內提出申復」等節點延伸。"
+      },
+      {
+        node_id: "N014",
+        node_order: 14,
+        node_title: "救濟途徑",
+        purpose: "申復後仍不服時，當事人應依其身分別循對應法規提出後續救濟；此節點涉及外部專屬法規，需依個案與主管機關最新函釋確認。",
+        actions: [
+          "確認當事人身分及救濟對象。",
+          "教師依教師法相關申訴途徑處理。",
+          "公立學校職員依公務人員保障法相關規定辦理。",
+          "私立學校職員或工友依勞動相關法規處理。",
+          "學生依學生申訴程序提出申訴。",
+          "通知時應明確告知救濟途徑、期間與受理機關。",
+          "涉及外部專屬法規者，應另依專法確認。"
+        ],
+        deadline: "對申復結果不服者，通常於接獲申復決定書次日起 30 日內依身分別提出救濟；實際期限應依各該法規與主管機關最新函釋確認。",
+        legal_basis: "性別平等教育法第39條；另涉及教師法、公務人員保障法、勞動相關規定、學生申訴相關規定，應另依專法確認。",
+        documents: "申復決定書、救濟途徑告知、教師申訴相關文件、學生申訴相關文件、其他身分別救濟文件。",
+        risk_warnings: [
+          "不要把校內申復當成最後救濟。",
+          "不要漏告知申復後救濟途徑。",
+          "不同身分適用不同救濟法規，不宜用同一套文字處理。",
+          "涉及教師法、公務人員保障法、勞動法規或學生申訴規定時，應另行確認最新規定。"
+        ],
+        red_flags: [
+          "教師停聘、解聘、不續聘或重大身分影響。",
+          "公務人員或勞工身分涉及不同救濟途徑。",
+          "學生或家長已表示要提起申訴或行政救濟。",
+          "案件涉及主管機關、媒體或外部法律程序。"
+        ],
+        source_note: "依教育部流程圖「依據性平法進行申復後之救濟途徑」及 NotebookLM 稽核結果拆分自原 N013。"
+      },
+      {
+        node_id: "N015",
+        node_order: 15,
+        node_title: "追蹤輔導／卷宗保存／系統結案",
+        purpose: "結案不是通知完成而已，學校仍應追蹤處置與輔導執行情形，完成卷宗保存、必要通報與回報系統結案。",
+        actions: [
+          "追蹤性平會處置、權責單位議處及輔導協助是否執行完成。",
+          "確認輔導計畫、處置執行與追蹤紀錄完整留存。",
+          "諮商輔導單位應妥善保存輔導紀錄，並視當事人需要轉介校外橫向資源。",
+          "整理卷宗資料並依密件與個資保護原則保存。",
+          "注意卷宗保存期限。",
+          "若當事人轉校或轉任，依規定辦理必要通知或轉銜。",
+          "視案件處理結果，請相關處室檢討校內制度、危險空間環境、宣導或管理措施，並留存改善紀錄，以備主管機關督導考核或校務評鑑查核。",
+          "於案件懲處及追蹤完成後，至回報系統勾選結案。"
+        ],
+        deadline: "卷宗保存 25 年；涉及轉校或轉任通報時，應注意知悉後 1 個月內之相關規定；系統結案應於懲處及追蹤完成後辦理。",
+        legal_basis: "性別平等教育法第28條；校園性別事件防治準則第34條、第36條。",
+        documents: "追蹤輔導紀錄、處置執行紀錄、卷宗保存清單、密件移交紀錄、轉銜或通報紀錄、回報系統結案紀錄。",
+        risk_warnings: [
+          "不要只完成通知而未追蹤處置與輔導執行。",
+          "追蹤輔導不只是完成處置紀錄，也應確認當事人安全、學習權或工作權是否持續受到保障。",
+          "不要在追蹤輔導或處置未完成前草率結案。",
+          "卷宗應依密件與個資保護原則保存。",
+          "不要漏做跨校轉銜或必要通報。",
+          "若當事人轉校、轉任或身分異動，應注意跨校通報與轉銜防護，相關期限應依最新法規與函釋確認。",
+          "回報系統結案應在懲處及追蹤完成後辦理。"
+        ],
+        red_flags: [
+          "當事人仍在同校或仍有接觸風險。",
+          "處置事項尚未完成。",
+          "輔導計畫尚未執行或未留紀錄。",
+          "案件涉及媒體、主管機關追蹤或重大行政責任。",
+          "當事人轉校、畢業、轉任或離職。"
+        ],
+        source_note: "依教育部流程圖「持續追蹤、輔導」「回報系統勾選結案」「卷宗資料整理、原始檔案密送文書單位保存」及 NotebookLM 稽核結果拆分自原 N013。"
+      }
+    );
+
+    Object.assign(SUMMARY_MAP, {
+      N007: "調查訪談不是先問清楚而已，而是由合法調查小組依程序訪談、蒐證並保護當事人。",
+      N008: "調查報告要寫清楚程序、證據、事實認定與理由，不能只整理雙方說法。",
+      N009: "性平會審議調查報告時，重點是確認程序、事實認定與處理建議是否依法妥當。",
+      N010: "性平會處置著重教育、輔導、保護與修復，不等同於懲處。",
+      N011: "懲處應由權責單位辦理，但不得脫離性平會調查認定另行重查。",
+      N012: "處理結果必須以書面通知，並清楚告知申復權利與期限。",
+      N013: "申復是申訴前的先行程序，應確認申復標的、期限與審議小組組成。",
+      N014: "申復後仍不服時，應依當事人身分別告知後續救濟途徑。",
+      N015: "結案不只是通知完成，還包括處置追蹤、輔導紀錄、卷宗保存與系統回報。"
+    });
+
+    Object.assign(DEADLINE_TAGS, {
+      N007: "調查期限內",
+      N008: "調查期限內",
+      N009: "審議處理",
+      N010: "依決議執行",
+      N011: "2 個月內",
+      N012: "30 日申復",
+      N013: "20／30 日",
+      N014: "30 日內",
+      N015: "追蹤結案"
+    });
+
+    Object.assign(LEGAL_REFS, {
+      N007: [
+        { law: "性別平等教育法", article: "第33條第5項", label: "調查期限與展延", plain: "調查應於受理後2個月內完成；必要時得延長，以2次為限，每次不得逾1個月，並應通知當事人。" },
+        { law: "性別平等教育法", article: "第36條第1項", label: "調查報告與處理建議", plain: "調查完成後，應將調查報告及處理建議提報學校或主管機關。" },
+        { law: "校園性別事件防治準則", article: "第24條", label: "調查程序注意事項", plain: "規範訪談、避免對質、保密、受訪紀錄確認及當事人配合調查等程序要求。" }
+      ],
+      N008: [
+        { law: "性別平等教育法", article: "第36條第1項、第2項", label: "調查完成與報告提出", plain: "調查完成後應提出調查報告及處理建議，作為後續處理基礎。" },
+        { law: "性別平等教育法施行細則", article: "第17條", label: "調查報告內容", plain: "調查報告應包含案由、訪談過程、陳述與答辯、物證查驗、事實認定及理由、處理建議等內容。" }
+      ],
+      N009: [
+        { law: "性別平等教育法", article: "第41條第1項", label: "事實認定依據", plain: "學校或主管機關對校園性別事件之事實認定，應依據性平會調查報告。" },
+        { law: "校園性別事件防治準則", article: "第30條第1項至第4項", label: "調查報告審議與書面陳述", plain: "性平會審議調查報告及處理建議；涉及改變行為人身分之處理建議時，應給予行為人書面陳述意見機會；有書面陳述時，性平會應再次開會審酌。" }
+      ],
+      N010: [
+        { law: "性別平等教育法", article: "第26條", label: "教育輔導與保護處置", plain: "學校得依事件情形為必要處置，包括心理輔導、教育課程、保護措施及其他必要協助。" },
+        { law: "性別平等教育法", article: "第25條", label: "當事人協助與專業服務", plain: "學校處理校園性別事件時，應依當事人需要提供心理諮商、輔導及其他必要協助。" },
+        { law: "校園性別事件防治準則", article: "第31條", label: "處置措施執行", plain: "性平會應決定處置措施之性質、執行單位與方式，並追蹤執行情形。" }
+      ],
+      N011: [
+        { law: "校園性別事件防治準則", article: "第30條第6項", label: "權責單位議處", plain: "議處由權責單位辦理，並應注意被害人方陳述意見程序；權責單位不得另行調查。" },
+        { law: "教師法等外部法規", article: "另依專法確認", label: "教師身分重大處分", plain: "涉及教師停聘、解聘、不續聘或其他身分重大影響時，須另依教師法等外部法規確認。" },
+        { law: "學生獎懲及其他身分別規定", article: "另依專法確認", label: "身分別議處程序", plain: "學生、職員工或其他身分之議處程序，應依各該身分適用法規或校內規定辦理。" }
+      ],
+      N012: [
+        { law: "性別平等教育法", article: "第36條第3項", label: "處理結果通知", plain: "學校或主管機關應將處理結果以書面附理由通知當事人。" },
+        { law: "性別平等教育法", article: "第37條第1項", label: "處理結果申復期限", plain: "當事人對處理結果不服者，得於收到書面通知次日起30日內提出申復。" },
+        { law: "校園性別事件防治準則", article: "第32條", label: "通知內容與申復告知", plain: "處理結果通知應注意內容、調查報告提供、申復期限及受理單位等事項。" }
+      ],
+      N013: [
+        { law: "性別平等教育法", article: "第32條第3項", label: "不受理申復", plain: "對不受理決定不服者，得於接獲不受理通知次日起20日內提出申復。" },
+        { law: "性別平等教育法", article: "第37條", label: "處理結果申復", plain: "對處理結果不服者，得於收到書面通知次日起30日內提出申復。" },
+        { law: "校園性別事件防治準則", article: "第21條、第32條", label: "申復通知與審議", plain: "規範不受理通知、處理結果通知、申復期限、受理單位及申復審議相關程序。" }
+      ],
+      N014: [
+        { law: "性別平等教育法", article: "第39條", label: "申復後救濟途徑", plain: "當事人對申復結果不服者，得依其身分別循相關法規提出後續救濟。" },
+        { law: "教師法、公務人員保障法、勞動相關規定、學生申訴規定", article: "另依專法確認", label: "身分別救濟", plain: "教師、職員工、學生等不同身分適用不同救濟制度，應依個案身分另行確認。" }
+      ],
+      N015: [
+        { law: "性別平等教育法", article: "第28條", label: "後續追蹤與轉銜", plain: "事件處理完成後，仍應注意行為人追蹤輔導、必要通報及轉銜事項。" },
+        { law: "校園性別事件防治準則", article: "第34條", label: "追蹤輔導", plain: "學校應依處理結果及個案需要執行追蹤輔導及必要協助。" },
+        { law: "校園性別事件防治準則", article: "第36條", label: "卷宗保存", plain: "校園性別事件相關資料應依規定保存，並注意密件與個資保護。" },
+        { law: "校園性別事件防治準則", article: "第40條", label: "督導考核與成效檢核", plain: "主管機關得將學校防治與調查處理校園性別事件之成效列入督導考核事項。" }
+      ]
+    });
+
+    Object.assign(DOCUMENT_REFS, {
+      N007: [
+        {
+          title: "2-1 申請人調查通知書",
+          purpose: "通知申請人調查訪談時間、地點及相關程序。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "2-2 行為人調查通知書",
+          purpose: "通知行為人調查訪談時間、地點及相關權利義務。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "2-3 相關人調查通知書",
+          purpose: "通知相關人接受訪談或提供資料。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "3-2 受訪人員簽到表",
+          purpose: "記錄受訪人員到場情形。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "3-3 調查訪談紀錄",
+          purpose: "記錄調查訪談內容，並供受訪者確認。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "臺北市參考｜B-2 至 B-9 調查通知與訪談相關表件",
+          purpose: "地方參考格式，供調查通知、保密告知、撤回申請及訪談相關作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ],
+      N008: [
+        {
+          title: "調查報告格式",
+          purpose: "撰寫調查程序、事實認定、理由及處理建議。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "訪談紀錄與事證清單",
+          purpose: "彙整調查報告所引用之訪談與事證資料。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "臺北市參考｜C-1 調查報告範例",
+          purpose: "地方參考格式，供調查報告撰寫與章節檢核作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ],
+      N009: [
+        {
+          title: "性平會會議紀錄",
+          purpose: "記錄性平會審議調查報告與處理建議之決議。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "性平會簽到表",
+          purpose: "記錄出席委員及列席人員。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "調查報告",
+          purpose: "供性平會審議事實認定與處理建議。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "臺北市參考｜C-2 教師身分改變書面陳述通知",
+          purpose: "地方參考格式，供涉及教師身分重大影響前通知書面陳述意見作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        },
+        {
+          title: "臺北市參考｜C-3 行為人書面陳述通知",
+          purpose: "地方參考格式，供通知行為人提出書面陳述意見作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        },
+        {
+          title: "臺北市參考｜C-4 性平會審酌書面意見會議紀錄",
+          purpose: "地方參考格式，供性平會再次開會審酌書面意見作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ],
+      N010: [
+        {
+          title: "處置執行紀錄",
+          purpose: "記錄性平會處置措施之執行單位、方式與追蹤結果。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "輔導計畫或協助紀錄",
+          purpose: "記錄心理諮商、輔導、課程調整或其他協助事項。",
+          source: "校內自備",
+          source_type: "校內自備"
+        }
+      ],
+      N011: [
+        {
+          title: "移送權責單位簽呈",
+          purpose: "將性平會調查結果與處理建議移送教評會、考績會、學生獎懲委員會或相關權責單位。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "被害人方陳述意見通知",
+          purpose: "議處前通知被害人方限期提出陳述意見。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "臺北市參考｜C-5 懲處建議書會簽懲處單位",
+          purpose: "地方參考格式，供權責單位議處前會簽或移送懲處作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ],
+      N012: [
+        {
+          title: "4-1 調查處理結果通知書",
+          purpose: "通知當事人調查處理結果、申復期限及受理單位。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "調查報告去識別化版本",
+          purpose: "依法提供當事人知悉處理結果時使用，並注意保密與個資。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "臺北市參考｜C-6 調查處理結果通知書",
+          purpose: "地方參考格式，供通知調查處理結果作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        },
+        {
+          title: "臺北市參考｜C-7 行為人通知書",
+          purpose: "地方參考格式，供通知行為人處理結果及權利事項參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        },
+        {
+          title: "臺北市參考｜C-8 檢舉人通知書",
+          purpose: "地方參考格式，供通知檢舉人處理結果相關事項參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ],
+      N013: [
+        {
+          title: "5-1 不受理申復書",
+          purpose: "對不受理決定不服時使用。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "5-2 調查結果不服申復書",
+          purpose: "對調查處理結果不服時使用。",
+          source: "友善校園學生事務與輔導工作資訊網",
+          source_type: "官方表件",
+          url: "https://friendlycampus.k12ea.gov.tw/GenderCase/12/40"
+        },
+        {
+          title: "申復審議小組簽呈",
+          purpose: "另組申復審議小組時使用。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "臺北市參考｜D-1 至 D-6 申復相關表件",
+          purpose: "地方參考格式，供申復提出、審議與決定通知等作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ],
+      N014: [
+        {
+          title: "申復決定書",
+          purpose: "通知當事人申復審議結果及後續救濟途徑。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "救濟途徑告知",
+          purpose: "依身分別告知教師、職員工、學生等後續救濟管道。",
+          source: "校內自備",
+          source_type: "校內自備"
+        }
+      ],
+      N015: [
+        {
+          title: "追蹤輔導紀錄",
+          purpose: "記錄輔導、協助及追蹤執行情形。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "處置執行紀錄",
+          purpose: "記錄性平會處置與權責單位議處執行情形。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "卷宗保存清單",
+          purpose: "整理案件卷宗、密件移交與保存資料。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "回報系統結案紀錄",
+          purpose: "於案件懲處及追蹤完成後，至回報系統勾選結案。",
+          source: "校內自備",
+          source_type: "校內自備"
+        },
+        {
+          title: "臺北市參考｜C-9 通知次一就讀學校",
+          purpose: "地方參考格式，供當事人轉校或就讀學校異動時通知與轉銜作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        },
+        {
+          title: "臺北市參考｜C-10 通知次一服務學校",
+          purpose: "地方參考格式，供行為人轉任或服務學校異動時通知與轉銜作業參考。",
+          source: "臺北市參考",
+          source_type: "地方參考表單"
+        }
+      ]
+    });
+
+    Object.values(DOCUMENT_REFS).forEach((refs) => {
+      refs.forEach((ref) => {
+        if (ref.source_type === "地方參考表單" && !ref.url) {
+          ref.url = TAIPEI_REFERENCE_FORM_URL;
+        }
+      });
+    });
+
+    const FLOW_GROUPS = [
+      { id: "pre-process", title: "一、前置處理", nodeIds: ["N001", "N002", "N003", "N004", "N005", "N006"] },
+      { id: "investigation", title: "二、調查作業", nodeIds: ["N007", "N008", "N009"] },
+      { id: "decision", title: "三、處置與通知", nodeIds: ["N010", "N011", "N012"] },
+      { id: "remedy-close", title: "四、申復與結案", nodeIds: ["N013", "N014", "N015"] }
+    ];
+
+    function resetDetailScrollPosition() {
+      detailPanel.scrollTop = 0;
+      detailGrid.scrollTop = 0;
+      detailPanel.querySelectorAll(".detail-check, .detail-subsections, .detail-subsection-body").forEach((element) => {
+        element.scrollTop = 0;
+      });
+    }
+
+    function focusCheckCardAfterSelection() {
+      const isNarrowScreen = window.matchMedia("(max-width: 900px)").matches;
+
+      requestAnimationFrame(() => {
+        resetDetailScrollPosition();
+        if (isNarrowScreen) {
+          detailPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+
+    function scrollFlowIntoViewOnNarrowScreen() {
+      if (!window.matchMedia("(max-width: 900px)").matches) return;
+
+      flowPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderFlowList() {
+      flowList.innerHTML = FLOW_GROUPS.map((group) => {
+        const nodes = group.nodeIds
+          .map((nodeId) => FLOW_NODES.find((node) => node.node_id === nodeId))
+          .filter(Boolean);
+
+        return `
+        <li class="flow-group" data-group-id="${group.id}">
+          <div class="flow-group-title">
+            <span>${group.title}</span>
+            <span class="flow-group-count">${nodes.length} 步驟</span>
+          </div>
+          <ol class="flow-group-list">
+            ${nodes.map((node) => `
+              <li>
+                <button class="flow-node" type="button" data-node-id="${node.node_id}" aria-pressed="false">
+                  <span class="node-code">${node.node_id}</span>
+                  <span class="node-text">
+                    <span class="node-title">${node.node_title}</span>
+                    <span class="node-meta">第 ${node.node_order} 步</span>
+                    <span class="node-deadline">${DEADLINE_TAGS[node.node_id]}</span>
+                  </span>
+                </button>
+              </li>
+            `).join("")}
+          </ol>
+        </li>
+        `;
+      }).join("");
+
+      flowList.addEventListener("click", (event) => {
+        const button = event.target.closest(".flow-node");
+        if (!button) return;
+        renderDetail(button.dataset.nodeId);
+        focusCheckCardAfterSelection();
+      });
+    }
+
+    function renderContent(value, type) {
+      if (type === "list") {
+        return `<ul>${value.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+      }
+
+      if (type === "deadline") {
+        return `<span class="deadline">${value}</span>`;
+      }
+
+      if (type === "note") {
+        return `<p class="source-note">${value}</p>`;
+      }
+
+      return `<p>${value}</p>`;
+    }
+
+    function renderActionSteps(items) {
+      return `
+        <ol class="action-steps">
+          ${items.map((item, index) => `
+            <li>
+              <span class="step-index">${String(index + 1).padStart(2, "0")}</span>
+              <span>${item}</span>
+            </li>
+          `).join("")}
+        </ol>
+      `;
+    }
+
+    function renderHighRiskSection(node) {
+      return `
+        <article class="check-section alert">
+          <h3 class="section-label"><span class="label-mark"></span>高風險情境</h3>
+          <p class="alert-subtitle">遇到下列情況，請提高處理層級，不宜單獨判斷。</p>
+          <div class="critical-risk-box" aria-label="重大程序提醒">
+            <p class="critical-risk-title">重大程序提醒</p>
+            <ul class="critical-risk-list">
+              <li>通報不是定罪，是啟動制度。</li>
+              <li>不得以私下和解、道歉或家長協議取代法定程序。</li>
+              <li>涉及疑似校園性別事件時，應依性別平等教育法及相關規定處理。</li>
+              <li>調查小組組成、迴避、保密與當事人權益告知應獨立提醒。</li>
+              <li>訪談與紀錄應避免誘導、責備或二次傷害。</li>
+            </ul>
+          </div>
+          <div class="section-content">${renderContent(node.red_flags, "list")}</div>
+        </article>
+      `;
+    }
+
+    function renderDetailField(node, field) {
+      const note = field.note ? `<span class="law-label-note">｜${field.note}</span>` : "";
+      let content = renderContent(node[field.key], field.type);
+      if (field.type === "legal") {
+        content = renderLegalRefs(node);
+      }
+      if (field.type === "documents") {
+        content = renderDocumentRefs(node);
+      }
+      const isOpen = field.type === "legal" || field.type === "documents";
+
+      return `
+        <details class="detail-subsection field-${field.key} ${field.className || ""}" ${isOpen ? "open" : ""}>
+          <summary>${field.label}${note}</summary>
+          <div class="detail-subsection-body section-content">${content}</div>
+        </details>
+      `;
+    }
+
+    function renderDocumentRefs(node) {
+      const refs = DOCUMENT_REFS[node.node_id] || [];
+      if (refs.length === 0) {
+        return `<p class="source-note">本步驟尚未設定對應表件。</p>`;
+      }
+
+      return `
+        <div class="document-ref-list">
+          <p class="document-ref-note">表件可能隨教育部或國教署公告更新，使用前請以官方頁面最新檔案為準。</p>
+          ${refs.map((ref) => {
+            const typeClass = ref.source_type === "官方表件"
+              ? "is-official"
+              : ref.source_type === "地方參考表單"
+                ? "is-reference"
+                : "is-local";
+            const typeLabel = ref.source_type === "地方參考表單" ? "臺北市參考" : ref.source_type;
+            const referenceNote = ref.source_type === "地方參考表單"
+              ? `<p class="document-ref-reference-note">地方參考表單請依各校及主管機關最新規定調整使用。</p>`
+              : "";
+            const linkMarkup = ref.source_type === "官方表件"
+              ? `<a class="document-ref-link" href="${ref.url}" target="_blank" rel="noopener noreferrer">開啟官方表件頁</a>`
+              : ref.source_type === "地方參考表單" && ref.url
+                ? `<a class="document-ref-link" href="${ref.url}" target="_blank" rel="noopener noreferrer">開啟臺北市參考表單頁</a>`
+                : ref.source_type === "地方參考表單"
+                  ? `<span class="document-ref-static">臺北市參考表件，請依地方公告或校內作業取得</span>`
+                  : `<span class="document-ref-static">依校內公文格式辦理</span>`;
+            return `
+            <section class="document-ref-card">
+              <div class="document-ref-head">
+                <p class="document-ref-title">${ref.title}</p>
+                <span class="document-ref-type ${typeClass}">${typeLabel}</span>
+              </div>
+              <p class="document-ref-purpose">使用時機：${ref.purpose}</p>
+              <p class="document-ref-source">來源：${ref.source}</p>
+              ${referenceNote}
+              ${linkMarkup}
+            </section>
+          `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function renderLegalRefs(node) {
+      const refs = LEGAL_REFS[node.node_id];
+      if (!refs || refs.length === 0) {
+        return renderContent(node.legal_basis, "text");
+      }
+
+      return `
+        <div class="legal-ref-list">
+          ${refs.map((ref) => `
+            <section class="legal-ref-card">
+              <div class="legal-ref-top">
+                <span class="legal-ref-law">${ref.law}</span>
+                <span class="legal-ref-article">${ref.article}</span>
+              </div>
+              <p class="legal-ref-label">${ref.label}</p>
+              <p class="legal-ref-plain">${ref.plain}</p>
+            </section>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderDetail(nodeId) {
+      const node = FLOW_NODES.find((item) => item.node_id === nodeId) || FLOW_NODES[0];
+      selectedCode.textContent = node.node_id;
+      selectedDeadline.textContent = DEADLINE_TAGS[node.node_id];
+      detailTitle.textContent = node.node_title;
+
+      detailGrid.innerHTML = `
+        <article class="summary-section">
+          <h3 class="section-label"><span class="label-mark"></span>重點摘要</h3>
+          <p class="summary-text">${SUMMARY_MAP[node.node_id]}</p>
+        </article>
+
+        <div class="priority-grid">
+          <article class="check-section">
+            <h3 class="section-label"><span class="label-mark"></span>先做這幾件事</h3>
+            <div class="section-content">${renderActionSteps(node.actions)}</div>
+          </article>
+
+          <article class="check-section">
+            <h3 class="section-label"><span class="label-mark"></span>期限</h3>
+            <div class="section-content">${renderContent(node.deadline, "deadline")}</div>
+          </article>
+        </div>
+
+        ${renderHighRiskSection(node)}
+
+        <details class="detail-check">
+          <summary>詳細查核</summary>
+          <div class="detail-subsections">
+            ${detailFieldConfig.map((field) => renderDetailField(node, field)).join("")}
+          </div>
+        </details>
+      `;
+
+      document.querySelectorAll(".flow-node").forEach((button) => {
+        const isActive = button.dataset.nodeId === node.node_id;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+
+      document.querySelectorAll(".flow-group").forEach((group) => {
+        const hasActiveNode = Boolean(group.querySelector(".flow-node.is-active"));
+        group.classList.toggle("is-active", hasActiveNode);
+      });
+    }
+
+    renderFlowList();
+    renderDetail("N001");
+    backToFlow.addEventListener("click", scrollFlowIntoViewOnNarrowScreen);
+  </script>
+</body>
+</html>
