@@ -6,20 +6,26 @@
   <title>校園性平流程法規查核輔助系統</title>
   <style>
     :root {
-      --navy-900: #16243a;
-      --navy-800: #20324e;
-      --navy-700: #2f4568;
+      --navy-900: #17233a;
+      --navy-800: #233755;
+      --navy-700: #38557b;
       --ink: #1d2733;
       --muted: #657386;
-      --line: #d8ded9;
-      --cream: #f5f1e8;
-      --paper: #fffcf5;
-      --sage: #8fa69a;
-      --gold: #b4975b;
-      --rust: #a15d4f;
-      --alert: #8f3f37;
+      --line: #e6ddd0;
+      --cream: #fff8ef;
+      --paper: #fffdf8;
+      --sage: #a8c6ba;
+      --gold: #e6cc8b;
+      --rust: #c98c80;
+      --alert: #b86863;
+      --macaron-blue: #bfd6ea;
+      --macaron-mint: #bfd8cc;
+      --macaron-butter: #f2dca8;
+      --macaron-rose: #e8b9b4;
+      --macaron-lavender: #d5cceb;
+      --macaron-peach: #f0c6a8;
       --white: #ffffff;
-      --shadow: 0 18px 42px rgba(22, 36, 58, 0.12);
+      --shadow: 0 18px 42px rgba(23, 35, 58, 0.1);
       --radius: 8px;
     }
 
@@ -31,7 +37,7 @@
       margin: 0;
       color: var(--ink);
       background:
-        linear-gradient(180deg, rgba(22, 36, 58, 0.08), rgba(245, 241, 232, 0) 220px),
+        linear-gradient(180deg, rgba(23, 35, 58, 0.08), rgba(255, 248, 239, 0) 220px),
         var(--cream);
       font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
@@ -48,7 +54,7 @@
     .topbar {
       background: var(--navy-900);
       color: var(--white);
-      border-bottom: 5px solid var(--gold);
+      border-bottom: 5px solid var(--macaron-butter);
     }
 
     .hero {
@@ -67,7 +73,7 @@
 
     .kicker {
       margin: 0;
-      color: #d9caa1;
+      color: #f0ddb1;
       font-size: 0.9rem;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -79,9 +85,9 @@
       align-items: center;
       min-height: 30px;
       padding: 4px 11px;
-      color: #f5dfaa;
-      background: rgba(255, 252, 245, 0.08);
-      border: 1px solid rgba(245, 223, 170, 0.34);
+      color: #f6e7bd;
+      background: rgba(191, 216, 204, 0.12);
+      border: 1px solid rgba(242, 220, 168, 0.38);
       border-radius: 999px;
       font-size: 0.86rem;
       font-weight: 800;
@@ -90,16 +96,18 @@
 
     h1 {
       margin: 0;
+      max-width: 100%;
       font-size: clamp(1.8rem, 3vw, 2.75rem);
       line-height: 1.18;
       letter-spacing: 0;
       font-weight: 800;
+      overflow-wrap: anywhere;
     }
 
     .subtitle {
       max-width: 850px;
       margin: 8px 0 0;
-      color: #dfe8e3;
+      color: #e5eee9;
       font-size: clamp(0.96rem, 1.35vw, 1.08rem);
       line-height: 1.5;
     }
@@ -108,9 +116,9 @@
       max-width: 920px;
       margin: 10px 0 0;
       padding: 9px 12px;
-      color: #f4efe3;
-      background: rgba(255, 252, 245, 0.09);
-      border: 1px solid rgba(245, 223, 170, 0.28);
+      color: #f7f1e7;
+      background: rgba(191, 214, 234, 0.1);
+      border: 1px solid rgba(242, 220, 168, 0.3);
       border-left: 4px solid var(--gold);
       border-radius: var(--radius);
       font-size: 0.96rem;
@@ -183,14 +191,14 @@
 
     .flow-group {
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.56);
+      background: rgba(255, 253, 248, 0.72);
       border: 1px solid var(--line);
       border-radius: var(--radius);
     }
 
     .flow-group.is-active {
-      border-color: rgba(180, 151, 91, 0.72);
-      box-shadow: inset 4px 0 0 var(--gold);
+      border-color: rgba(184, 151, 207, 0.55);
+      box-shadow: inset 4px 0 0 var(--macaron-lavender);
     }
 
     .flow-group-title {
@@ -200,14 +208,37 @@
       gap: 10px;
       padding: 9px 11px;
       color: var(--navy-900);
-      background: #f3efe5;
+      background: #f7efe6;
       border-bottom: 1px solid var(--line);
       font-size: 0.9rem;
       font-weight: 900;
     }
 
     .flow-group.is-active .flow-group-title {
-      background: #efe3c4;
+      background: #efeafa;
+    }
+
+    .flow-group:nth-child(4n + 1) .flow-group-title {
+      background: #eef7f2;
+    }
+
+    .flow-group:nth-child(4n + 2) .flow-group-title {
+      background: #eef5fb;
+    }
+
+    .flow-group:nth-child(4n + 3) .flow-group-title {
+      background: #fff3df;
+    }
+
+    .flow-group:nth-child(4n + 4) .flow-group-title {
+      background: #f4eefb;
+    }
+
+    .flow-group.is-active:nth-child(4n + 1) .flow-group-title,
+    .flow-group.is-active:nth-child(4n + 2) .flow-group-title,
+    .flow-group.is-active:nth-child(4n + 3) .flow-group-title,
+    .flow-group.is-active:nth-child(4n + 4) .flow-group-title {
+      background: #efeafa;
     }
 
     .flow-group-count {
@@ -251,7 +282,7 @@
       color: var(--ink);
       background: var(--white);
       border: 1px solid var(--line);
-      border-left: 5px solid var(--sage);
+      border-left: 5px solid var(--macaron-mint);
       border-radius: var(--radius);
       text-align: left;
       cursor: pointer;
@@ -270,7 +301,7 @@
       color: var(--white);
       background: var(--navy-800);
       border-color: var(--navy-800);
-      border-left-color: var(--gold);
+      border-left-color: var(--macaron-butter);
     }
 
     .node-code {
@@ -279,8 +310,8 @@
       display: grid;
       place-items: center;
       color: var(--navy-900);
-      background: #edf1ed;
-      border: 1px solid rgba(47, 69, 104, 0.18);
+      background: #eef7f2;
+      border: 1px solid rgba(56, 85, 123, 0.16);
       border-radius: 50%;
       font-size: 0.78rem;
       font-weight: 800;
@@ -288,7 +319,7 @@
 
     .flow-node.is-active .node-code {
       color: var(--navy-900);
-      background: #f3dca0;
+      background: var(--macaron-butter);
       border-color: transparent;
     }
 
@@ -320,8 +351,8 @@
       margin-top: 8px;
       padding: 2px 8px;
       color: var(--navy-900);
-      background: #efe3c4;
-      border: 1px solid rgba(180, 151, 91, 0.4);
+      background: #fff0ca;
+      border: 1px solid rgba(230, 204, 139, 0.56);
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 900;
@@ -330,7 +361,7 @@
 
     .flow-node.is-active .node-deadline {
       color: var(--navy-900);
-      background: #f3dca0;
+      background: var(--macaron-butter);
       border-color: transparent;
     }
 
@@ -344,7 +375,7 @@
       padding: 24px 26px;
       color: var(--white);
       background:
-        linear-gradient(135deg, rgba(143, 166, 154, 0.22), rgba(180, 151, 91, 0.12)),
+        linear-gradient(135deg, rgba(191, 216, 204, 0.22), rgba(213, 204, 235, 0.14)),
         var(--navy-800);
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
@@ -355,8 +386,8 @@
       margin: 14px 18px 0;
       padding: 8px 12px;
       color: var(--navy-800);
-      background: #f1eadb;
-      border: 1px solid rgba(180, 151, 91, 0.34);
+      background: #eef7f2;
+      border: 1px solid rgba(168, 198, 186, 0.48);
       border-radius: var(--radius);
       cursor: pointer;
       font-size: 0.9rem;
@@ -373,8 +404,8 @@
       align-items: center;
       min-height: 30px;
       padding: 3px 10px;
-      color: #f5dfaa;
-      border: 1px solid rgba(245, 223, 170, 0.42);
+      color: #f6e7bd;
+      border: 1px solid rgba(242, 220, 168, 0.44);
       border-radius: 999px;
       font-weight: 800;
       font-size: 0.86rem;
@@ -405,32 +436,32 @@
     }
 
     .check-section.risk {
-      background: #fcf8ef;
-      border-top: 3px solid rgba(180, 151, 91, 0.48);
+      background: #fff6e8;
+      border-top: 3px solid rgba(240, 198, 168, 0.58);
     }
 
     .check-section.alert {
-      background: #fbf2ef;
-      border: 1px solid rgba(143, 63, 55, 0.24);
-      border-top: 4px solid rgba(143, 63, 55, 0.62);
+      background: #fff4f2;
+      border: 1px solid rgba(184, 104, 99, 0.26);
+      border-top: 4px solid rgba(184, 104, 99, 0.62);
     }
 
     .check-section.alert .section-label {
-      color: #743c35;
+      color: #824b47;
     }
 
     .critical-risk-box {
       margin: 0 0 16px;
       padding: 14px 15px;
-      background: #f7e9e4;
-      border: 1px solid rgba(143, 63, 55, 0.22);
-      border-left: 5px solid rgba(143, 63, 55, 0.66);
+      background: #f9e5e2;
+      border: 1px solid rgba(184, 104, 99, 0.22);
+      border-left: 5px solid rgba(184, 104, 99, 0.66);
       border-radius: var(--radius);
     }
 
     .critical-risk-title {
       margin: 0 0 8px;
-      color: #6e3832;
+      color: #824b47;
       font-size: 0.92rem;
       font-weight: 900;
     }
@@ -458,14 +489,14 @@
       top: 0.72em;
       width: 7px;
       height: 7px;
-      background: rgba(143, 63, 55, 0.72);
+      background: rgba(184, 104, 99, 0.72);
       border-radius: 50%;
     }
 
     .summary-section {
       padding: 22px 24px;
-      background: #f9f3e5;
-      border-left: 7px solid var(--gold);
+      background: #fff3df;
+      border-left: 7px solid var(--macaron-peach);
     }
 
     .summary-text {
@@ -497,8 +528,8 @@
       gap: 12px;
       align-items: start;
       padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.62);
-      border: 1px solid rgba(216, 222, 217, 0.86);
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(230, 221, 208, 0.92);
       border-radius: var(--radius);
     }
 
@@ -510,8 +541,8 @@
       min-height: 26px;
       margin-top: 1px;
       color: var(--navy-900);
-      background: #e9eee9;
-      border: 1px solid rgba(143, 166, 154, 0.55);
+      background: #eef7f2;
+      border: 1px solid rgba(168, 198, 186, 0.58);
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 900;
@@ -524,8 +555,8 @@
       margin-left: 8px;
       padding: 3px 10px;
       color: var(--navy-900);
-      background: #f3dca0;
-      border: 1px solid rgba(245, 223, 170, 0.36);
+      background: var(--macaron-butter);
+      border: 1px solid rgba(242, 220, 168, 0.48);
       border-radius: 999px;
       font-size: 0.84rem;
       font-weight: 900;
@@ -549,7 +580,7 @@
       min-height: 62px;
       padding: 18px 22px;
       color: var(--navy-900);
-      background: #f4efe3;
+      background: #f7efe6;
       border-top: 1px solid var(--line);
       cursor: pointer;
       font-weight: 900;
@@ -567,7 +598,7 @@
       display: grid;
       place-items: center;
       color: var(--navy-900);
-      background: #e8dcc1;
+      background: #e7eef7;
       border-radius: 999px;
       font-size: 1.1rem;
       line-height: 1;
@@ -581,7 +612,7 @@
       display: grid;
       gap: 8px;
       padding: 10px;
-      background: #f0eadf;
+      background: #f3ede4;
     }
 
     .detail-subsection {
@@ -599,7 +630,7 @@
       min-height: 52px;
       padding: 13px 15px;
       color: var(--navy-800);
-      background: #fbf7ee;
+      background: #fffaf2;
       cursor: pointer;
       font-weight: 900;
       list-style: none;
@@ -617,7 +648,7 @@
       flex: 0 0 auto;
       place-items: center;
       color: var(--navy-900);
-      background: #e8dcc1;
+      background: #e7eef7;
       border-radius: 999px;
       font-size: 1rem;
       line-height: 1;
@@ -633,7 +664,7 @@
     }
 
     .detail-subsection.risk > summary {
-      background: #fbf1e6;
+      background: #fff3ea;
     }
 
     .law-label-note {
@@ -649,9 +680,9 @@
 
     .legal-ref-card {
       padding: 13px 14px;
-      background: rgba(255, 255, 255, 0.68);
-      border: 1px solid rgba(216, 222, 217, 0.9);
-      border-left: 5px solid var(--sage);
+      background: #f7fbff;
+      border: 1px solid rgba(191, 214, 234, 0.92);
+      border-left: 5px solid var(--macaron-blue);
       border-radius: var(--radius);
     }
 
@@ -671,8 +702,8 @@
     .legal-ref-article {
       padding: 2px 8px;
       color: var(--navy-900);
-      background: #efe3c4;
-      border: 1px solid rgba(180, 151, 91, 0.38);
+      background: #fff0ca;
+      border: 1px solid rgba(230, 204, 139, 0.52);
       border-radius: 999px;
       font-size: 0.82rem;
       font-weight: 900;
@@ -689,7 +720,7 @@
       margin: 0;
       padding-top: 8px;
       color: #687485;
-      border-top: 1px solid rgba(216, 222, 217, 0.78);
+      border-top: 1px solid rgba(191, 214, 234, 0.72);
       font-size: 0.88rem;
       line-height: 1.55;
     }
@@ -698,7 +729,7 @@
       content: "白話提示";
       display: inline-block;
       margin-right: 7px;
-      color: #7a6a45;
+      color: #74664a;
       font-size: 0.76rem;
       font-weight: 900;
     }
@@ -717,9 +748,9 @@
 
     .document-ref-card {
       padding: 13px 14px;
-      background: rgba(255, 255, 255, 0.68);
-      border: 1px solid rgba(216, 222, 217, 0.9);
-      border-left: 5px solid var(--gold);
+      background: #fff9ed;
+      border: 1px solid rgba(240, 198, 168, 0.78);
+      border-left: 5px solid var(--macaron-peach);
       border-radius: var(--radius);
     }
 
@@ -751,20 +782,20 @@
 
     .document-ref-type.is-official {
       color: var(--navy-900);
-      background: #efe3c4;
-      border: 1px solid rgba(180, 151, 91, 0.38);
+      background: #fff0ca;
+      border: 1px solid rgba(230, 204, 139, 0.52);
     }
 
     .document-ref-type.is-local {
       color: var(--navy-800);
-      background: #e9eee9;
-      border: 1px solid rgba(143, 166, 154, 0.48);
+      background: #eef7f2;
+      border: 1px solid rgba(168, 198, 186, 0.5);
     }
 
     .document-ref-type.is-reference {
       color: #5f4b22;
-      background: #f1e8d0;
-      border: 1px solid rgba(180, 151, 91, 0.34);
+      background: #f4eefb;
+      border: 1px solid rgba(213, 204, 235, 0.64);
     }
 
     .document-ref-purpose,
@@ -813,8 +844,8 @@
       margin-top: 11px;
       padding: 6px 12px;
       color: var(--navy-800);
-      background: #e9eee9;
-      border: 1px solid rgba(143, 166, 154, 0.48);
+      background: #eef7f2;
+      border: 1px solid rgba(168, 198, 186, 0.5);
       border-radius: var(--radius);
       font-size: 0.88rem;
       font-weight: 900;
@@ -834,7 +865,7 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--sage);
+      background: var(--macaron-mint);
     }
 
     .alert .label-mark {
@@ -863,9 +894,9 @@
       min-height: 56px;
       padding: 12px 15px;
       color: var(--navy-900);
-      background: #ead7a9;
-      border: 1px solid rgba(180, 151, 91, 0.58);
-      border-left: 6px solid var(--gold);
+      background: #ffe9b8;
+      border: 1px solid rgba(230, 204, 139, 0.68);
+      border-left: 6px solid var(--macaron-butter);
       border-radius: var(--radius);
       font-weight: 900;
       box-shadow: inset 0 0 0 1px rgba(255, 252, 245, 0.55);
@@ -881,7 +912,7 @@
       margin: 28px 22px 24px;
       padding: 16px 18px;
       color: var(--muted);
-      background: #f2eee4;
+      background: #f6f0e8;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       font-size: 0.88rem;
@@ -906,7 +937,7 @@
       margin-top: 10px;
       padding-top: 10px;
       color: #6d7684;
-      border-top: 1px solid rgba(216, 222, 217, 0.78);
+      border-top: 1px solid rgba(230, 221, 208, 0.9);
       font-size: 0.84rem;
       font-weight: 800;
     }
@@ -1172,6 +1203,12 @@
         gap: 8px;
       }
 
+      h1 {
+        font-size: clamp(1.32rem, 5.25vw, 1.45rem);
+        line-height: 1.2;
+        word-break: break-all;
+      }
+
       .flow-list,
       .detail-grid {
         grid-template-columns: 1fr;
@@ -1188,6 +1225,12 @@
       .flow-group-title {
         min-height: 44px;
         padding: 11px 12px;
+      }
+
+      .panel-title,
+      .flow-group-title {
+        justify-content: flex-start;
+        flex-wrap: wrap;
       }
 
       .flow-node {
@@ -1248,7 +1291,7 @@
           <p>COPYRIGHT © 2026 HSINCHU NEI HU PRIMARY SCHOOL</p>
           <p>總務主任 江志宏</p>
           <p><a href="mailto:smallcannon@nhps.hc.edu.tw">smallcannon@nhps.hc.edu.tw</a>｜03-5373184 #130</p>
-          <p class="version-info">版本：v0.4.x｜資料基準：教育部流程圖 202501 修｜最後維護：2026-05</p>
+          <p class="version-info">版本：v0.4.9｜資料基準：教育部流程圖 202501 修｜最後維護：2026-05</p>
         </footer>
       </section>
     </main>

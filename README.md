@@ -7,7 +7,7 @@ https://smallcannon-arch.github.io/gender-checkdesk/
 
 ## 版本資訊
 
-- 版本：v0.4.x
+- 版本：v0.4.9
 - 資料基準：教育部流程圖 202501 修
 - 最後維護：2026-05
 
